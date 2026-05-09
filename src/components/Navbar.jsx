@@ -1,63 +1,109 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 import logo from "../assets/logo.png";
-import "./NavBar.css";
 
-const NavBar = () => {
+const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg custom-navbar">
+    <nav className="navbar navbar-expand-lg bg-white shadow-sm py-3">
       <div className="container-fluid">
+{/* Logo + Name */}
+<Link
+  to="/"
+  className="navbar-brand d-flex align-items-center gap-2"
+>
+  <img
+    src={logo}
+    alt="CareBridge Logo"
+    width="50"
+    height="50"
+    className="img-fluid"
+  />
+  <div>
 
-        {/* Logo */}
-        <Link className="navbar-brand d-flex align-items-center" to="/">
-          <img src={logo} alt="logo" className="logo-img" />
-        </Link>
+  <span className="fw-bold fs-4">
+    CareBridge
+  </span>
+  <p className="text-secondary small m-0">Bridging Hearts, Building Futures</p>
+  </div>
+</Link>
 
-        {/* Toggle button */}
+        {/* Mobile Toggle */}
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* Centered Links */}
-        <div
-          className="collapse navbar-collapse justify-content-center"
-          id="navbarNav"
-        >
-          <ul className="navbar-nav text-center">
+        {/* Navbar Links */}
+        <div className="collapse navbar-collapse" id="navbarNav">
+
+          {/* Center Links */}
+          <ul className="navbar-nav mx-auto gap-3">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/">
+              <Link className="nav-link fw-medium" to="/">
                 Home
-              </NavLink>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link fw-medium" to="/">
+                About Us
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link fw-medium" to="/">
+                How It Works
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link fw-medium" to="/">
+                Orphanages
+              </Link>
             </li>
 
             <li className="nav-item">
-              <NavLink className="nav-link" to="/about">
-                About
-              </NavLink>
+              <Link className="nav-link fw-medium" to="/about">
+                
+                Needs
+              </Link>
             </li>
 
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/services">
-                Services
-              </NavLink>
-            </li>
+            
 
             <li className="nav-item">
-              <NavLink className="nav-link" to="/contact">
+              <Link className="nav-link fw-medium" to="/contact">
                 Contact
-              </NavLink>
+              </Link>
             </li>
           </ul>
-        </div>
 
+          {/* Right Side */}
+          <div className="d-flex align-items-center gap-3 mx-5">
+            <FaSearch
+              style={{
+                cursor: "pointer",
+                fontSize: "18px"
+              }}
+            />
+
+            <button className="btn btn-outline-success">
+              Login
+            </button>
+
+            <button className="btn btn-success">
+              Sign Up
+            </button>
+          </div>
+        </div>
       </div>
     </nav>
   );
 };
 
-export default NavBar;
+export default Navbar;
