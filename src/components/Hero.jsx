@@ -1,6 +1,5 @@
 import React from "react";
 import slider from "../assets/banner.png";
-import './Hero.css';
 
 const Hero = () => {
   return (

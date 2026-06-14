@@ -7,26 +7,26 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm py-3">
       <div className="container-fluid">
-{/* Logo + Name */}
-<Link
-  to="/"
-  className="navbar-brand d-flex align-items-center gap-2"
->
-  <img
-    src={logo}
-    alt="CareBridge Logo"
-    width="50"
-    height="50"
-    className="img-fluid"
-  />
-  <div>
+        {/* Logo + Name */}
+        <Link
+          to="/"
+          className="navbar-brand d-flex align-items-center gap-2"
+        >
+          <img
+            src={logo}
+            alt="CareBridge Logo"
+            width="50"
+            height="50"
+            className="img-fluid"
+          />
+          <div>
 
-  <span className="fw-bold fs-4">
-    CareBridge
-  </span>
-  <p className="text-secondary small m-0">Bridging Hearts, Building Futures</p>
-  </div>
-</Link>
+            <span className="fw-bold fs-4">
+              CareBridge
+            </span>
+            <p className="text-secondary small m-0">Bridging Hearts, Building Futures</p>
+          </div>
+        </Link>
 
         {/* Mobile Toggle */}
         <button
@@ -52,29 +52,29 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link fw-medium" to="/">
+              <Link className="nav-link fw-medium" to="/about">
                 About Us
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link fw-medium" to="/">
+              <Link className="nav-link fw-medium" to="/howitworks">
                 How It Works
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link fw-medium" to="/">
+              <Link className="nav-link fw-medium" to="/orphanages">
                 Orphanages
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link fw-medium" to="/about">
-                
+              <Link className="nav-link fw-medium" to="/needs">
+
                 Needs
               </Link>
             </li>
 
-            
+
 
             <li className="nav-item">
               <Link className="nav-link fw-medium" to="/contact">
@@ -96,9 +96,11 @@ const Navbar = () => {
               Login
             </button>
 
-            <button className="btn btn-success">
-              Sign Up
-            </button>
+            <Link to="/register">
+              <button className="btn btn-success">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </div>
       </div>
