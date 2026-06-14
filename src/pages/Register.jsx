@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import kidsImg from "../assets/children.png";
+import { register } from "../apis/auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import {
   FaUser,
@@ -13,31 +16,57 @@ import {
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 
+
 const Register = () => {
+
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+
+const handleRegister = async () => {
+   navigate("/verify-email",{
+    state : {name,email,password,role}
+   });
+  try {
+    const payload = {
+      name,
+      email,
+      password,
+      role,
+    };
+
+    const response = await register(payload);
+
+    toast.success(response.message);
+
+   
+  } catch (error) {
+    console.error(error);
+
+    
+    toast.error(error.response?.data?.message || "Registration failed");
+  }
+};
   return (
     <>
       <Navbar />
       <div className="container-fluid bg-light py-3 px-2 px-md-4">
-
-
         <div className="row g-4 align-items-center min-vh-100">
-
           {/* Left Side */}
           <div className="col-lg-6">
-
             <div className="p-3 p-md-4">
-
-              <h1 className="fw-bold mb-2 display-6">
-                Join CareBridge
-              </h1>
+              <h1 className="fw-bold mb-2 display-6">Join CareBridge</h1>
 
               <h2 className="fw-bold text-success mb-3">
                 Be the reason someone smiles.
               </h2>
 
               <p className="text-muted fs-6 mb-4">
-                Create your account and start making
-                a meaningful difference in a child’s life.
+                Create your account and start making a meaningful difference in
+                a child’s life.
               </p>
 
               {/* Features */}
@@ -45,13 +74,10 @@ const Register = () => {
                 <FaHandHoldingHeart className="text-success fs-3 mt-1" />
 
                 <div>
-                  <h5 className="fw-bold mb-1">
-                    Support Children
-                  </h5>
+                  <h5 className="fw-bold mb-1">Support Children</h5>
 
                   <p className="text-muted small mb-0">
-                    Help provide food, education,
-                    and a better future.
+                    Help provide food, education, and a better future.
                   </p>
                 </div>
               </div>
@@ -60,9 +86,7 @@ const Register = () => {
                 <FaShieldAlt className="text-success fs-3 mt-1" />
 
                 <div>
-                  <h5 className="fw-bold mb-1">
-                    100% Transparent
-                  </h5>
+                  <h5 className="fw-bold mb-1">100% Transparent</h5>
 
                   <p className="text-muted small mb-0">
                     Every donation creates real impact.
@@ -74,9 +98,7 @@ const Register = () => {
                 <FaUsers className="text-success fs-3 mt-1" />
 
                 <div>
-                  <h5 className="fw-bold mb-1">
-                    Trusted by Many
-                  </h5>
+                  <h5 className="fw-bold mb-1">Trusted by Many</h5>
 
                   <p className="text-muted small mb-0">
                     Join thousands of donors and orphanages.
@@ -93,25 +115,20 @@ const Register = () => {
                   style={{ maxHeight: "300px" }}
                 />
               </div>
-
             </div>
           </div>
 
           {/* Right Side Form */}
           <div className="col-lg-6">
-
             <div
               className="bg-white shadow rounded-4 p-4 p-md-5 mx-auto"
               style={{ maxWidth: "500px" }}
             >
-
               {/* Header */}
               <div className="text-center mb-4">
                 <FaUser className="fs-2 text-success mb-2" />
 
-                <h2 className="fw-bold fs-3">
-                  Create Your Account
-                </h2>
+                <h2 className="fw-bold fs-3">Create Your Account</h2>
 
                 <p className="text-muted small">
                   Sign up to get started with CareBridge
@@ -120,9 +137,7 @@ const Register = () => {
 
               {/* Full Name */}
               <div className="mb-3">
-                <label className="fw-semibold">
-                  Full Name
-                </label>
+                <label className="fw-semibold">Full Name</label>
 
                 <div className="input-group mt-2">
                   <span className="input-group-text">
@@ -133,15 +148,15 @@ const Register = () => {
                     type="text"
                     className="form-control"
                     placeholder="Enter your full name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
               </div>
 
               {/* Email */}
               <div className="mb-3">
-                <label className="fw-semibold">
-                  Email Address
-                </label>
+                <label className="fw-semibold">Email Address</label>
 
                 <div className="input-group mt-2">
                   <span className="input-group-text">
@@ -152,15 +167,15 @@ const Register = () => {
                     type="email"
                     className="form-control"
                     placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
 
               {/* Password */}
               <div className="mb-3">
-                <label className="fw-semibold">
-                  Password
-                </label>
+                <label className="fw-semibold">Password</label>
 
                 <div className="input-group mt-2">
                   <span className="input-group-text">
@@ -171,21 +186,25 @@ const Register = () => {
                     type="password"
                     className="form-control"
                     placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
 
               {/* Role */}
               <div className="mb-4">
-                <label className="fw-semibold">
-                  Role
-                </label>
+                <label className="fw-semibold">Role</label>
 
                 <div className="input-group mt-2">
-                  <select className="form-select">
-                    <option>Select your role</option>
-                    <option>Donor</option>
-                    <option>Orphanage Admin</option>
+                  <select
+                    className="form-select"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                  >
+                    <option value="">Select your role</option>
+                    <option value="DONOR">DONOR</option>
+                    <option value="ORPHANAGE">ORPHANAGE</option>
                   </select>
 
                   <span className="input-group-text">
@@ -196,25 +215,20 @@ const Register = () => {
 
               {/* Button */}
 
-              <Link
-                to="/verify-email"
+              <button
                 className="btn btn-success w-100 py-2 fw-semibold"
+                onClick={handleRegister}
               >
                 Register →
-              </Link>
-
+              </button>
 
               {/* Footer */}
               <p className="text-center mt-3 mb-0 small">
                 Already have an account?
-                <span className="text-success fw-bold ms-2">
-                  Login
-                </span>
+                <span className="text-success fw-bold ms-2">Login</span>
               </p>
-
             </div>
           </div>
-
         </div>
       </div>
     </>

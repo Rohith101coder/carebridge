@@ -1,34 +1,55 @@
 import React from "react";
 import { FaHome, FaUsers, FaGift, FaHeart } from "react-icons/fa";
-
+import { getLandingPageStats } from "../apis/landingPage";
+import { useEffect, useState } from "react";
 const Stats = () => {
+
+  const [stats, setStats] = useState({
+    verifiedOrphanages: 0,
+    activeDonors: 0,
+    needsFulfilled: 0,
+    citiesReached: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await getLandingPageStats();
+        setStats(data);
+      } catch (error) {
+        alert("error: " + error);
+      }
+    };
+    fetchStats();
+  }, []);
+
   const statsData = [
     {
       id: 1,
       icon: <FaHome />,
       color: "#198754",
-      number: "250+",
+      number: stats.verifiedOrphanages+"+",
       title: "Verified Orphanages"
     },
     {
       id: 2,
       icon: <FaUsers />,
       color: "#ff6a00",
-      number: "12,500+",
+      number: stats.activeDonors+"+",
       title: "Active Donors"
     },
     {
       id: 3,
       icon: <FaGift />,
       color: "#6f42c1",
-      number: "28,000+",
+      number: stats.needsFulfilled+"+",
       title: "Needs Fulfilled"
     },
     {
       id: 4,
       icon: <FaHeart />,
       color: "#0d6efd",
-      number: "50+",
+      number: stats.activeDonors+"+",
       title: "Cities Reached"
     }
   ];

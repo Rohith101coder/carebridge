@@ -6,9 +6,11 @@ import HowItWorks from "../components/HowItWorks";
 import ActionCards from "../components/ActionCards";
 import Footer from "../components/Footer";
 
+
 const Home = () => {
   const navigate = useNavigate();
 
+  
   return (
     <>
       <Navbar />
