@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import {
   FaArrowLeft,
   FaCoins,
@@ -11,10 +12,12 @@ import {
 } from "react-icons/fa";
 import DonorSidebar from "../components/DonorSidebar";
 import { getCategoryIcon } from "../utils/categoryIcons";
+import DonationModal from "../components/DonationModal";
 
 const SingleNeedPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const need = location.state?.need; // Accessing the data passed via navigate
 
   const getPriorityBadge = (priority) => {
@@ -198,17 +201,22 @@ const SingleNeedPage = () => {
                 </div>
 
                 {/* Donate Now CTA */}
-                <Link
-                  to={`/donor/donate/${need.needItemId}`}
-                  className="btn btn-success btn-lg fw-bold py-3 rounded-3 shadow-sm text-decoration-none d-flex align-items-center justify-content-center"
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="btn btn-success btn-lg fw-bold py-3 rounded-3 shadow-sm border-0 w-100"
                 >
                   Donate Now
-                </Link>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <DonationModal
+        show={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        needItemId={need?.needItemId}
+      />
     </div>
   );
 };
