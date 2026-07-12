@@ -35,31 +35,47 @@
 
 }
 
-.carebot-window{
+.carebot-window {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
 
-    position:fixed;
+    width: 380px;
+    max-width: calc(100vw - 20px);
 
-    right:25px;
+    height: 550px;
+    max-height: calc(100vh - 120px);
 
-    bottom:90px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
 
-    width:380px;
+    display: flex;
+    flex-direction: column;
 
-    height:550px;
+    z-index: 9999;
 
-    background:white;
+    animation: slideUp .25s ease;
+}
 
-    border-radius:20px;
+@media (max-width: 576px) {
 
-    overflow:hidden;
+    .carebot-window{
 
-    display:flex;
+        left:10px;
+        right:10px;
 
-    flex-direction:column;
+        bottom:80px;
 
-    z-index:9999;
+        width:auto;
 
-    animation:slideUp .25s ease;
+        max-width:none;
+
+        height:70vh;
+
+        border-radius:18px;
+
+    }
 
 }
 

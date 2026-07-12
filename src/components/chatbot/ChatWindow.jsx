@@ -71,6 +71,8 @@ ${message}
 Answer only the current question using the above conversation if relevant.
 `;
 
+// console.log(prompt);
+
     try {
       const answer = await askCareBot(prompt);
 
