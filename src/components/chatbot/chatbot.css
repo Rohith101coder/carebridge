@@ -1,171 +1,243 @@
-.carebot-button{
+/* ===============================
+   Floating Button
+================================= */
+
+.carebot-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: #198754;
+    color: #fff;
+
+    font-weight: 600;
+    font-size: 15px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.18);
+
+    transition: all .3s ease;
+
+    z-index: 9999;
+}
+
+.carebot-button:hover{
+    background:#157347;
+    transform:translateY(-3px);
+}
+
+
+/* ===============================
+   Chat Window
+================================= */
+
+.carebot-window{
+
     position:fixed;
-    bottom:25px;
-    right:25px;
+
+    right:20px;
+    bottom:90px;
+
+    width:380px;
+    max-width:calc(100vw - 20px);
+
+    height:550px;
+    max-height:calc(100vh - 120px);
+
+    background:#fff;
+
+    border-radius:20px;
+
+    overflow:hidden;
 
     display:flex;
-    align-items:center;
-    gap:10px;
+    flex-direction:column;
 
-    border:none;
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
 
-    padding:12px 20px;
+    z-index:9999;
 
-    border-radius:50px;
+    animation:slideUp .25s ease;
+
+}
+
+
+/* ===============================
+   Header
+================================= */
+
+.carebot-header{
 
     background:#198754;
 
     color:white;
 
-    font-weight:600;
+    padding:14px 16px;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.2);
+    display:flex;
 
-    z-index:9999;
+    justify-content:space-between;
 
-    transition:.3s;
-
-}
-
-.carebot-button:hover{
-
-    transform:translateY(-3px);
-
-    background:#157347;
+    align-items:center;
 
 }
 
-.carebot-window {
-    position: fixed;
-    right: 20px;
-    bottom: 90px;
+.carebot-header h6{
 
-    width: 380px;
-    max-width: calc(100vw - 20px);
+    margin:0;
 
-    height: 550px;
-    max-height: calc(100vh - 120px);
+    font-size:16px;
 
-    background: #fff;
-    border-radius: 20px;
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-
-    z-index: 9999;
-
-    animation: slideUp .25s ease;
-}
-
-@media (max-width: 576px) {
-
-    .carebot-window{
-
-        left:10px;
-        right:10px;
-
-        bottom:80px;
-
-        width:auto;
-
-        max-width:none;
-
-        height:70vh;
-
-        border-radius:18px;
-
-    }
+    font-weight:700;
 
 }
 
-@keyframes slideUp{
+.carebot-header small{
 
-from{
-
-opacity:0;
-
-transform:translateY(30px);
+    opacity:.9;
 
 }
 
-to{
 
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-
-.carebot-header{
-
-background:#198754;
-
-color:white;
-
-padding:15px 18px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-}
+/* ===============================
+   Avatar
+================================= */
 
 .bot-avatar{
 
-width:45px;
+    width:42px;
+    height:42px;
 
-height:45px;
+    border-radius:50%;
 
-border-radius:50%;
+    background:white;
 
-background:white;
+    display:flex;
 
-display:flex;
+    align-items:center;
 
-align-items:center;
+    justify-content:center;
 
-justify-content:center;
-
-font-size:22px;
+    font-size:20px;
 
 }
+
+
+/* ===============================
+   Header Buttons
+================================= */
 
 .close-btn{
 
-border:none;
+    background:none;
 
-background:none;
+    border:none;
 
-color:white;
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
 
 }
+
+.close-btn:hover{
+
+    opacity:.8;
+
+}
+
+
+.clear-chat-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    background:rgba(255,255,255,.18);
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.3);
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    transition:.25s;
+
+}
+
+.clear-chat-btn:hover{
+
+    background:white;
+
+    color:#198754;
+
+}
+
+
+/* ===============================
+   Body
+================================= */
 
 .carebot-body{
 
-flex:1;
+    flex:1;
 
-padding:20px;
+    padding:16px;
 
-background:#f8f9fa;
+    overflow-y:auto;
 
-overflow:auto;
+    background:#f8faf9;
 
 }
 
+
+/* ===============================
+   Welcome Card
+================================= */
+
+.welcome-card{
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+}
+
+
+/* ===============================
+   Messages
+================================= */
+
 .chat-message{
 
-    max-width:75%;
+    max-width:82%;
 
     padding:12px 15px;
 
     border-radius:18px;
 
-    font-size:.95rem;
+    font-size:14px;
 
     line-height:1.5;
 
@@ -175,11 +247,11 @@ overflow:auto;
 
 .bot-message{
 
-    background:#ffffff;
-
-    color:#333;
+    background:white;
 
     border:1px solid #ececec;
+
+    color:#333;
 
 }
 
@@ -188,6 +260,58 @@ overflow:auto;
     background:#198754;
 
     color:white;
+
+}
+
+
+/* ===============================
+   Suggested Questions
+================================= */
+
+.suggestion-chip{
+
+    border:none;
+
+    background:#eef8f2;
+
+    color:#198754;
+
+    padding:8px 12px;
+
+    border-radius:999px;
+
+    font-size:13px;
+
+    transition:.25s;
+
+}
+
+.suggestion-chip:hover{
+
+    background:#198754;
+
+    color:white;
+
+}
+
+
+/* ===============================
+   Footer
+================================= */
+
+.carebot-footer{
+
+    padding:15px;
+
+    background:white;
+
+    border-top:1px solid #eee;
+
+}
+
+.carebot-footer input{
+
+    font-size:14px;
 
 }
 
@@ -205,144 +329,195 @@ overflow:auto;
 
 }
 
-.suggestion-chip{
 
-    border:none;
-
-    background:#eef8f2;
-
-    color:#198754;
-
-    padding:8px 14px;
-
-    border-radius:30px;
-
-    font-size:.85rem;
-
-    transition:.25s;
-
-}
-
-.suggestion-chip:hover{
-
-    background:#198754;
-
-    color:white;
-
-}
-
-.carebot-body{
-
-    background:#f8faf9;
-
-}
+/* ===============================
+   Typing Indicator
+================================= */
 
 .typing-indicator{
 
-display:flex;
+    display:flex;
 
-gap:6px;
+    gap:6px;
 
-background:white;
+    background:white;
 
-padding:12px 18px;
+    padding:12px 18px;
 
-border-radius:18px;
+    border-radius:18px;
 
-border:1px solid #eee;
+    border:1px solid #eee;
 
 }
 
 .typing-indicator span{
 
-width:8px;
+    width:8px;
 
-height:8px;
+    height:8px;
 
-background:#198754;
+    background:#198754;
 
-border-radius:50%;
+    border-radius:50%;
 
-animation:bounce 1.2s infinite;
+    animation:bounce 1.2s infinite;
 
 }
 
 .typing-indicator span:nth-child(2){
 
-animation-delay:.2s;
+    animation-delay:.2s;
 
 }
 
 .typing-indicator span:nth-child(3){
 
-animation-delay:.4s;
+    animation-delay:.4s;
 
 }
 
 @keyframes bounce{
 
-0%,80%,100%{
+    0%,80%,100%{
 
-transform:scale(0);
+        transform:scale(0);
 
-}
+    }
 
-40%{
+    40%{
 
-transform:scale(1);
+        transform:scale(1);
 
-}
-
-}
-
-.clear-chat-btn{
-    display:flex;
-    align-items:center;
-    gap:6px;
-
-    background:rgba(255,255,255,0.18);
-    color:#fff;
-
-    border:1px solid rgba(255,255,255,.25);
-
-    padding:6px 12px;
-
-    border-radius:30px;
-
-    font-size:13px;
-    font-weight:500;
-
-    transition:all .25s ease;
-}
-
-.clear-chat-btn:hover{
-    background:#fff;
-    color:#198754;
-    transform:translateY(-1px);
-}
-
-.clear-chat-btn:active{
-    transform:scale(.96);
-}
-
-.welcome-card{
-
-background:white;
-
-padding:18px;
-
-border-radius:16px;
-
-box-shadow:0 4px 12px rgba(0,0,0,.08);
+    }
 
 }
 
-.carebot-footer{
 
-padding:15px;
+/* ===============================
+   Open Animation
+================================= */
 
-background:white;
+@keyframes slideUp{
 
-border-top:1px solid #eee;
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ===============================
+   Mobile
+================================= */
+
+@media (max-width:576px){
+
+    .carebot-button{
+
+        right:16px;
+        bottom:16px;
+
+        padding:10px 16px;
+
+        font-size:14px;
+
+    }
+
+    .carebot-window{
+
+        left:10px;
+        right:10px;
+
+        bottom:80px;
+
+        width:auto;
+
+        height:72vh;
+
+        max-width:none;
+
+        border-radius:18px;
+
+    }
+
+    .carebot-header{
+
+        padding:12px;
+
+    }
+
+    .carebot-header h6{
+
+        font-size:15px;
+
+    }
+
+    .bot-avatar{
+
+        width:36px;
+        height:36px;
+
+        font-size:18px;
+
+    }
+
+    .clear-chat-btn{
+
+        width:38px;
+        height:38px;
+
+        justify-content:center;
+
+        padding:0;
+
+    }
+
+    .clear-chat-btn span{
+
+        display:none;
+
+    }
+
+    .chat-message{
+
+        max-width:90%;
+
+        font-size:13px;
+
+    }
+
+    .suggestion-chip{
+
+        font-size:12px;
+
+        padding:7px 10px;
+
+    }
+
+    .carebot-footer{
+
+        padding:10px;
+
+    }
+
+    .send-btn{
+
+        width:38px;
+
+        height:38px;
+
+    }
 
 }

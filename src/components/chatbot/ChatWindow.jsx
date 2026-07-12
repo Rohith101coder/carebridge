@@ -38,6 +38,17 @@ const ChatWindow = ({ onClose }) => {
     sessionStorage.setItem("carebot_messages", JSON.stringify(messages));
   }, [messages]);
 
+   const buildHistory = () => {
+     return messages
+       .filter((msg) => !(msg.sender === "bot" && msg.text.includes("Hi 👋")))
+       .slice(-8)
+       .map((msg) => ({
+         role: msg.sender === "user" ? "user" : "assistant",
+         content: msg.text,
+       }));
+   };
+
+
   const sendMessage = async (customMessage = null) => {
     const message = customMessage || input;
 
@@ -54,27 +65,16 @@ const ChatWindow = ({ onClose }) => {
 
     setInput("");
     setLoading(true);
-    const history = messages
-      .slice(-6) // Last 6 messages (3 user + 3 bot)
-      .map((m) => `${m.sender === "user" ? "User" : "Assistant"}: ${m.text}`)
-      .join("\n");
+    // const history = messages
+    //   .slice(-6) // Last 6 messages (3 user + 3 bot)
+    //   .map((m) => `${m.sender === "user" ? "User" : "Assistant"}: ${m.text}`)
+    //   .join("\n");
 
-      const prompt = `
-Conversation History:
-
-${history}
-
-Current User Question:
-
-${message}
-
-Answer only the current question using the above conversation if relevant.
-`;
-
+     
 // console.log(prompt);
 
     try {
-      const answer = await askCareBot(prompt);
+      const answer = await askCareBot(message,buildHistory());
 
       const botMessage = {
         sender: "bot",
