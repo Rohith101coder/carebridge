@@ -6,7 +6,7 @@ const authHeader = () => ({
 
 export const bookVisit = async(data)=>{
   console.log(data);
-  const response = await api.post("/donor/slots/book",{
+  const response = await api.post("/donor/slots/book",data,{
     headers : authHeader(),
   });
 
