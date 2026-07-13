@@ -1,15 +1,19 @@
-// 5. HowItWorks.jsx (Stacked layout and optimized input spacing on mobile)
-import React from "react";
+import React, { useState } from "react";
 import {
   FaUserPlus,
   FaSearch,
   FaGift,
   FaCalendarAlt,
   FaArrowRight,
-  FaArrowDown,
 } from "react-icons/fa";
 
 const HowItWorks = () => {
+  const [subscribeBox, setSubscribeBox] = useState(false);
+
+  const handleClick = () => {
+    setSubscribeBox(!subscribeBox);
+  };
+
   const steps = [
     {
       id: 1,
@@ -42,7 +46,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-4 py-lg-5">
+    <section className="py-4 py-lg-5 position-relative">
       <div className="container px-3 px-md-4">
         <div className="text-center mb-4">
           <h4 className="fw-bold">How It Works</h4>
@@ -62,7 +66,7 @@ const HowItWorks = () => {
                 </div>
               </div>
 
-              {/* Arrow horizontal for desktop, vertical/hidden for mobile */}
+              {/* Arrow horizontal for desktop, hidden for mobile */}
               {index !== steps.length - 1 && (
                 <div className="col-auto d-none d-md-flex align-items-center justify-content-center">
                   <FaArrowRight className="text-muted" />
@@ -71,8 +75,8 @@ const HowItWorks = () => {
             </React.Fragment>
           ))}
 
-          {/* Subscribe Card */}
-          <div className="col-12 col-lg-3 mt-3 mt-lg-0">
+          {/* Subscribe Card Column (Position relative to anchor popup) */}
+          <div className="col-12 col-lg-3 mt-3 mt-lg-0 position-relative">
             <div className="card border-0 shadow-sm rounded-4 p-3 h-100">
               <h6 className="fw-bold mb-2">Get Updates</h6>
               <p className="text-muted small mb-3">
@@ -85,11 +89,45 @@ const HowItWorks = () => {
                   className="form-control form-control-sm"
                   placeholder="Enter your email"
                 />
-                <button className="btn btn-success btn-sm px-3">
+                <button
+                  className="btn btn-success btn-sm px-3"
+                  onClick={handleClick}
+                >
                   Subscribe
                 </button>
               </div>
             </div>
+
+            {/* Anchored Dialog Box directly under the Subscribe card */}
+            {subscribeBox && (
+              <div
+                className="position-absolute bg-white border rounded-4 shadow-sm p-3 text-center start-0 end-0 mt-2 mx-3 mx-sm-0"
+                style={{
+                  zIndex: 1050,
+                }}
+              >
+                <div className="d-flex align-items-center justify-content-center text-success mb-2">
+                  <i className="bi bi-bell-fill fs-5"></i>
+                </div>
+                <h6 className="fw-bold text-dark small mb-1">
+                  Instant Orphanage Alerts
+                </h6>
+                <p
+                  className="text-secondary mb-3 lh-sm"
+                  style={{ fontSize: "0.75rem" }}
+                >
+                  Get notified via email whenever an orphanage posts an urgent
+                  need. Coming soon! 🌱
+                </p>
+                <button
+                  onClick={handleClick}
+                  className="btn btn-success btn-sm w-100 py-1 fw-semibold rounded-pill"
+                  style={{ fontSize: "12px" }}
+                >
+                  Got it
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

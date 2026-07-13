@@ -83,8 +83,8 @@ const Footer = () => {
           {/* Contact */}
           <div className="col-12 col-md-1">
             <h6 className="fw-bold mb-3 fs-6">Contact</h6>
-            <p className="small mb-1 text-light">support@carebridge.org</p>
-            <p className="small mb-2 text-light">+91 98765 43210</p>
+            <p className="small mb-1 text-light">carebridge086@gmail.com</p>
+            <p className="small mb-2 text-light">+91 6309408139</p>
             <div className="d-flex gap-3 mt-2">
               <FaFacebookF />
               <FaInstagram />

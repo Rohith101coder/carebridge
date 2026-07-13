@@ -2,8 +2,18 @@
 import React from "react";
 import urgentImg from "../assets/banner1.png";
 import visitImg from "../assets/banner2.png";
+import { useNavigate } from "react-router-dom";
 
 const ActionCards = () => {
+  const navigate = useNavigate();
+
+  const handleClick = (data)=>{
+    if(data === "Book a Visit"){
+      navigate("/allslots");
+    }else if(data === "Explore Needs"){
+      navigate("/needs");
+    }
+  }
   const cards = [
     {
       id: 1,
@@ -39,7 +49,7 @@ const ActionCards = () => {
                 <div>
                   <h5 className="fw-bold fs-6 fs-md-5 mb-2">{card.title}</h5>
                   <p className="text-muted small mb-3">{card.desc}</p>
-                  <button className="btn btn-link text-success p-0 fw-semibold text-decoration-none">
+                  <button className="btn btn-link text-success p-0 fw-semibold text-decoration-none" onClick={()=> handleClick(card.btn)}>
                     {card.btn} →
                   </button>
                 </div>

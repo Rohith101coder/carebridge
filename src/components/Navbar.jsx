@@ -80,6 +80,11 @@ const handleClosePopup = () => {
               </Link>
             </li>
             <li className="nav-item">
+              <Link className="nav-link fw-medium py-1" to="/allslots">
+                Slots
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link fw-medium py-1" to="/contact">
                 Contact
               </Link>
@@ -101,8 +106,11 @@ const handleClosePopup = () => {
               </button>
             </Link>
 
-            <Link to="/register" className="w-50 w-lg-auto text-center">
-              <button className="btn btn-success btn-sm w-100 px-6">
+            <Link
+              to="/register"
+              className="w-50 w-lg-auto text-center text-decoration-none"
+            >
+              <button className="btn btn-success btn-sm w-100 px-4 text-nowrap">
                 Sign Up
               </button>
             </Link>

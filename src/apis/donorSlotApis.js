@@ -4,6 +4,15 @@ const authHeader = () => ({
   Authorization: `Bearer ${localStorage.getItem("token")}`,
 });
 
+export const bookVisit = async(data)=>{
+  console.log(data);
+  const response = await api.post("/donor/slots/book",{
+    headers : authHeader(),
+  });
+
+  return response.data;
+}
+
 export const getPendingBookings = async () => {
   const response = await api.get("/donor/slots/pending-bookings", {
     headers: authHeader(),

@@ -1,8 +1,18 @@
 // 3. Hero.jsx (Responsive padding, typography, and image alignment for small screens)
 import React from "react";
 import slider from "../assets/banner.png";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleBookNow = ()=>{
+    navigate("/allslots");
+  }
+
+  const handleDonateNow=()=>{
+    navigate("/needs")
+  }
   return (
     <section className="bg-light py-4 py-lg-0">
       <div className="container-fluid px-4 px-lg-5 text-center bg-white py-5">
@@ -19,12 +29,12 @@ const Hero = () => {
             </p>
 
             <div className="d-flex gap-3 justify-content-center justify-content-lg-start">
-              <button className="btn btn-success px-4 py-2 fw-semibold">
+              <button className="btn btn-success px-4 py-2 fw-semibold" onClick={handleDonateNow}>
                 Donate Now
               </button>
 
-              <button className="btn btn-outline-success px-4 py-2 fw-semibold">
-                Learn More
+              <button className="btn btn-outline-success px-4 py-2 fw-semibold" onClick={handleBookNow}>
+                Book Now
               </button>
             </div>
           </div>
