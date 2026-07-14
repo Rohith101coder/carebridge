@@ -2,6 +2,7 @@ import React from "react";
 import riceImg from "../assets/ricebag.jpg";
 import booksImg from "../assets/books.jpg";
 import blanketImg from "../assets/blankets.jpg";
+import { getCategoryIcon } from "../utils/categoryIcons";
 
 const RecentDonations = ({donations}) => {
   const donationList = (donations || []).map((donation) => ({
@@ -38,7 +39,7 @@ const RecentDonations = ({donations}) => {
         >
           <div className="d-flex gap-3 align-items-center">
             <img
-              src={item.image}
+              src={getCategoryIcon(item.category)}
               alt={item.itemName}
               className="rounded"
               style={{

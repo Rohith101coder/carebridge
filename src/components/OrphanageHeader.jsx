@@ -37,21 +37,21 @@ const OrphanageHeader = ({
       <div className="d-flex align-items-center">
         {/* Notification */}
         <div className="position-relative me-3 me-md-4">
-          <Link to="/orphanage/notifications" className="text-dark">
+          <Link to="/orphanage/messages" className="text-dark">
             <FaBell size={20} style={{ cursor: "pointer" }} />
           </Link>
           <span
             className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
             style={{ fontSize: "9px" }}
           >
-            2
+            0
           </span>
         </div>
 
         {/* Profile */}
         <div className="d-flex align-items-center gap-2 position-relative">
           <img
-            src={profileImg}
+            src={overview.orpAdminPic || profileImg}
             alt="profile"
             className="rounded-circle border"
             style={{
@@ -68,6 +68,7 @@ const OrphanageHeader = ({
             <div>
               <h6 className="mb-0 fw-bold small">
                 {overview?.adminName || "Admin"}
+                {console.log(overview)}
               </h6>
               <small className="text-muted" style={{ fontSize: "0.7rem" }}>
                 Orphanage Admin
