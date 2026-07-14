@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 import {
@@ -14,13 +14,17 @@ import {
 } from "react-icons/fa";
 import kidsImg from "../assets/children.png";
 import Navbar from "../components/Navbar";
-import { login } from "../apis/auth"; // Assuming you have this API function
+import { login } from "../apis/auth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const location = useLocation();
+  const [email, setEmail] = useState(location.state?.email || "");
+  const [password, setPassword] = useState(location.state?.password || "");
   const [showPassword, setShowPassword] = useState(false);
+
+  // Retrieve the path the user came from (e.g. from NeedDetails page)
+  const redirectTo = location.state?.from || null;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -29,39 +33,45 @@ const Login = () => {
       return;
     }
 
-   try {
-     const response = await login({
-       email,
-       password,
-     });
+    try {
+      const response = await login({
+        email,
+        password,
+      });
 
-     localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.token);
 
-     const decoded = jwtDecode(response.token);
+      const decoded = jwtDecode(response.token);
+      const role = decoded.role;
 
-     const role = decoded.role;
+      toast.success("Login successful!");
 
-     switch (role) {
-       case "DONOR":
-         navigate("/donor/dashboard");
-         break;
+      // If redirected from a specific page and role is DONOR, route back to that page
+      if (redirectTo && role === "DONOR") {
+        navigate(redirectTo);
+        return;
+      }
 
-       case "ORPHANAGE":
-         navigate("/orphanage/dashboard");
-         break;
+      // Otherwise fall back to role-based dashboard navigation
+      switch (role) {
+        case "DONOR":
+          navigate("/donor/dashboard");
+          break;
 
-       case "ADMIN":
-         navigate("/admin/dashboard");
-         break;
+        case "ORPHANAGE":
+          navigate("/orphanage/dashboard");
+          break;
 
-       default:
-         toast.error("Unknown user role");
-     }
+        case "ADMIN":
+          navigate("/admin/dashboard");
+          break;
 
-     toast.success("Login successful!");
-   } catch (error) {
-     toast.error(error.response?.data?.message || "Login failed");
-   }
+        default:
+          toast.error("Unknown user role");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Login failed");
+    }
   };
 
   return (
@@ -69,7 +79,7 @@ const Login = () => {
       <Navbar />
       <div className="container-fluid bg-light py-3 px-2 px-md-4">
         <div className="row g-4 align-items-center min-vh-100">
-          {/* Left Side: Matching the provided design */}
+          {/* Left Side */}
           <div className="col-lg-6">
             <div className="p-3 p-md-4">
               <h1 className="fw-bold mb-2 display-6">Welcome Back!</h1>
@@ -81,7 +91,6 @@ const Login = () => {
                 child's life.
               </p>
 
-              {/* Features - Matching Reference Image */}
               <div className="mb-3 d-flex gap-3">
                 <FaHandHoldingHeart className="text-success fs-3 mt-1" />
                 <div>

@@ -63,9 +63,14 @@ const VerifyEmail = () => {
 
       console.log(response);
 
-      toast.success("OTP verified successfully");
-      navigate("/");
-      toast.success("Registration successful");
+     toast.success("Registration successful");
+
+     navigate("/login", {
+       state: {
+         email,
+         password,
+       },
+     });
 
     } catch (error) {
       console.error(error);
