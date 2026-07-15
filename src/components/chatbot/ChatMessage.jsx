@@ -1,4 +1,7 @@
+import Linkify from "linkify-react";
+
 const ChatMessage = ({ sender, text }) => {
+  console.log(text);
   return (
     <div
       className={`d-flex mb-3 ${
@@ -10,7 +13,7 @@ const ChatMessage = ({ sender, text }) => {
           sender === "user" ? "user-message" : "bot-message"
         }`}
       >
-        {text}
+        <Linkify>{text}</Linkify>
       </div>
     </div>
   );
