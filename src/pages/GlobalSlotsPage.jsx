@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import { getGlobalVisitSlots } from "../apis/globalslotApis";
 import { bookVisit } from "../apis/donorSlotApis";
@@ -15,7 +17,6 @@ const decodeJwt = (token) => {
         .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
         .join(""),
     );
-    console.log(jsonPayload);
     return JSON.parse(jsonPayload);
   } catch (error) {
     return null;
@@ -37,8 +38,6 @@ const GlobalSlotsPage = () => {
   const [numberOfVisitors, setNumberOfVisitors] = useState(1);
   const [bookingMessage, setBookingMessage] = useState("");
   const [bookingLoading, setBookingLoading] = useState(false);
-  const [confirmedBookingData, setConfirmedBookingData] = useState(null);
-  const [bookingError, setBookingError] = useState(null);
 
   useEffect(() => {
     const fetchSlots = async () => {
@@ -48,6 +47,7 @@ const GlobalSlotsPage = () => {
         setOrphanagesWithSlots(data);
       } catch (err) {
         setError("Failed to load available slots. Please try again later.");
+        toast.error("Failed to load available slots.");
       } finally {
         setLoading(false);
       }
@@ -66,11 +66,25 @@ const GlobalSlotsPage = () => {
     return matchesSearch && matchesFilter;
   });
 
+  const handleSlotSelect = (slot, orgName) => {
+    const slotData = {
+      ...slot,
+      orphanageName: orgName,
+    };
+    setSelectedSlot(slotData);
+
+    // If width is mobile view (< 992px bootstrap lg breakpoint), automatically trigger the dialog modal
+    if (window.innerWidth < 992) {
+      setNumberOfVisitors(1);
+      setBookingMessage("");
+      setShowModal(true);
+    }
+  };
+
   const handleOpenModal = () => {
     if (!selectedSlot) return;
     setNumberOfVisitors(1);
     setBookingMessage("");
-    setBookingError(null);
     setShowModal(true);
   };
 
@@ -87,14 +101,14 @@ const GlobalSlotsPage = () => {
     const requestedVisitors = Number(numberOfVisitors);
 
     if (requestedVisitors > availableSeats) {
-      setBookingError(
-        `Requested visitors (${requestedVisitors}) exceed the available seats (${availableSeats}) for this slot.`,
+      toast.error(
+        `Requested visitors (${requestedVisitors}) exceed the available seats (${availableSeats}).`,
       );
       return;
     }
 
     // 2. Retrieve JWT token from localStorage
-    const token = localStorage.getItem("token"); // Adjust key if named differently in your app
+    const token = localStorage.getItem("token");
 
     if (!token) {
       navigate("/login", {
@@ -122,7 +136,7 @@ const GlobalSlotsPage = () => {
       : userRole === "DONOR";
 
     if (!isDonor) {
-      setBookingError(
+      toast.error(
         "Access denied. Only users with the DONOR role are permitted to book visit slots.",
       );
       setShowModal(false);
@@ -132,7 +146,6 @@ const GlobalSlotsPage = () => {
     // 5. Trigger the API if all checks pass
     try {
       setBookingLoading(true);
-      setBookingError(null);
 
       const requestPayload = {
         slotId: selectedSlot.slotId,
@@ -141,15 +154,14 @@ const GlobalSlotsPage = () => {
       };
 
       const response = await bookVisit(requestPayload);
-      setConfirmedBookingData(response);
+      toast.success(
+        response.message ||
+          `Slot reserved successfully! (Booking ID: ${response.bookingId})`,
+      );
       setShowModal(false);
       setSelectedSlot(null);
-
-      setTimeout(() => {
-        setConfirmedBookingData(null);
-      }, 5000);
     } catch (err) {
-      setBookingError("Failed to book the slot. Please try again later.");
+      toast.error("Failed to book the slot. Please try again later.");
     } finally {
       setBookingLoading(false);
     }
@@ -185,6 +197,7 @@ const GlobalSlotsPage = () => {
   return (
     <div className="min-h-screen bg-light font-sans text-dark position-relative">
       <Navbar />
+      <ToastContainer position="top-right" autoClose={4000} />
 
       <div className="container py-4">
         <div className="mb-4 bg-white p-4 rounded-4 shadow-sm border border-light-subtle">
@@ -227,28 +240,6 @@ const GlobalSlotsPage = () => {
             </select>
           </div>
         </div>
-
-        {bookingError && (
-          <div
-            className="alert alert-danger py-2 small mb-4 rounded-3"
-            role="alert"
-          >
-            <i className="bi bi-exclamation-triangle-fill me-2"></i>
-            {bookingError}
-          </div>
-        )}
-
-        {confirmedBookingData && (
-          <div className="alert alert-success py-2 small mb-4 rounded-3 d-flex align-items-center justify-content-between">
-            <div className="d-flex align-items-center gap-2">
-              <i className="bi bi-check-circle-fill text-success fs-5"></i>
-              <span>
-                {confirmedBookingData.message || "Slot reserved successfully!"}{" "}
-                (Booking ID: {confirmedBookingData.bookingId})
-              </span>
-            </div>
-          </div>
-        )}
 
         <div className="row g-4">
           <div className="col-lg-8">
@@ -301,10 +292,7 @@ const GlobalSlotsPage = () => {
                             <div key={slot.slotId} className="col-sm-6">
                               <button
                                 onClick={() =>
-                                  setSelectedSlot({
-                                    ...slot,
-                                    orphanageName: org.orphanageName,
-                                  })
+                                  handleSlotSelect(slot, org.orphanageName)
                                 }
                                 className={`w-100 p-3 rounded-3 text-start border transition-all d-flex flex-column justify-content-between ${
                                   isSelected
@@ -358,7 +346,8 @@ const GlobalSlotsPage = () => {
             </div>
           </div>
 
-          <div className="col-lg-4">
+          {/* Desktop Reservation Summary Sidebar (Hidden on mobile via d-none d-lg-block) */}
+          <div className="col-lg-4 d-none d-lg-block">
             <div
               className="card border-0 shadow-sm rounded-4 p-4 bg-white sticky-top"
               style={{ top: "90px" }}

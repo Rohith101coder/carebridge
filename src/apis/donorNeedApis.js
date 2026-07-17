@@ -10,8 +10,18 @@ export const getAllNeeds = () => {
 };
 
 export const donate = async (donationData) => {
-  // Since the endpoint consumes multipart/form-data, we use FormData
+  // console.log("donationData in donate function:", donationData);
   const formData = new FormData();
+
+  // If no image is provided, use the default logo from public/logo.png
+  if (!donationData.orderProofImage) {
+    const response = await fetch("/logo.png");
+    const blob = await response.blob();
+
+    donationData.orderProofImage = new File([blob], "logo.png", {
+      type: blob.type || "image/png",
+    });
+  }
 
   for (const key in donationData) {
     if (donationData[key] !== null && donationData[key] !== undefined) {
@@ -23,7 +33,6 @@ export const donate = async (donationData) => {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      // Add your auth token here if applicable, e.g., Authorization: `Bearer ${token}`
     },
   });
 
