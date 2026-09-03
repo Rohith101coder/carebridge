@@ -2,20 +2,20 @@
   "name": "CareBridge",
   "short_name": "CareBridge",
   "description": "Connect donors with orphanages and their needs.",
-  "start_url": "/carebridge/",
-  "scope": "/carebridge/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#198754",
   "icons": [
     {
-      "src": "/carebridge/icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/carebridge/icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
